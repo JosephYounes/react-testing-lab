@@ -1,33 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 
-function AddTransactionForm({postTransaction}) {
-  function submitForm(e){
-    e.preventDefault()
-    const newTransaction = {
-      date: e.target.date.value,
-      description: e.target.description.value,
-      category: e.target.category.value,
-      amount: e.target.amount.value
+export default function AddTransactionForm({ postTransaction }) {
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const payload = {
+      description,
+      amount: Number(amount),
+      date: new Date().toISOString(),
+    };
+
+    // Let parent handle posting so tests can mock fetch on parent URL
+    if (postTransaction) {
+      postTransaction(payload);
     }
-    postTransaction(newTransaction)
 
+    setDescription("");
+    setAmount("");
   }
 
   return (
-    <div className="ui segment">
-      <form className="ui form" onSubmit={(e)=>{submitForm(e)}}>
-        <div className="inline fields">
-          <input type="date" name="date" />
-          <input type="text" name="description" placeholder="Description" />
-          <input type="text" name="category" placeholder="Category" />
-          <input type="number" name="amount" placeholder="Amount" step="0.01" />
-        </div>
-        <button className="ui button" type="submit">
-          Add Transaction
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} data-testid="add-form">
+      <input
+        data-testid="desc-input"
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <input
+        data-testid="amount-input"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <button type="submit" data-testid="submit-btn">
+        Add
+      </button>
+    </form>
   );
 }
-
-export default AddTransactionForm;

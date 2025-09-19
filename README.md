@@ -79,6 +79,11 @@ Before we begin coding, let's complete the initial setup for this lesson:
 - Add comments to the code to explain purpose and logic.
 - Clarify intent/functionality of code for other developers.
 - Add screenshots of completed work included in Markdown in `README.md`.
+  
+### Screenshot
+Below is a screenshot of the test suite passing locally.
+
+![Tests passing](src/Tests/screenshots/tests-passing.png)
 - Update `README.md` to reflect the functionality of the application following [Make a README](https://makeareadme.com).
 - Delete any stale branches on GitHub.
 - Remove unnecessary/commented-out code.
